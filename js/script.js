@@ -44,14 +44,9 @@ function showPage(list, page) {
         studentList.insertAdjacentHTML('beforeend', studentItem);
     }
   }
-     // inside the loop create a conditional to display the proper students
-       // inside the conditional:
-         // create the elements needed to display the student information
-         // insert the above elements
-
 }
 
-showPage(data, 1);
+
 
 
 
@@ -61,38 +56,44 @@ This function will create and insert/append the elements needed for the paginati
 */
 
 function addPagination(list) {
-  // create a variable to calculate the number of pages needed
   var numOfPages = Math.ceil(list.length / 9);
-  // select the element with a class of `link-list` and assign it to a variable
   var linkList = document.querySelector('.link-list');
-  
-  // set the innerHTML property of the variable you just created to an empty string
   linkList.innerHTML = '';
 
-  // loop over the number of pages needed
   for ( i = 1; i <= numOfPages; i++) {
-    <li>
-      <button type="button">${i}</button>
-    </li>
+    let button = `
+      <li>
+        <button type="button">${i}</button>  
+      </li>`
+      linkList.insertAdjacentHTML('beforeend', button);
   }
-    // create the elements needed to display the pagination button
-    // insert the above elements
 
-  // give the first pagination button a class of "active"
+  let buttonActive = document.querySelector('.link-list button'); 
+  buttonActive.className = 'active';
 
-  // create an event listener on the `link-list` element
-    // if the click target is a button:
-      // remove the "active" class from the previous button
-      // add the active class to the clicked button
-      // call the showPage function passing the `list` parameter and page to display as arguments
-console.log(list);
-
+  linkList.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON') {
+      const removeClass = document.querySelector('.active');
+      removeClass.className = '';
+      e.target.className = 'active';
+      showPage(list,e.target.textContent);
+    }
+  });
 }
 
+showPage(data, 1);
 addPagination(data);
-// Call functions
 
 
-
+//Was able to place a search box in he header - but struggled with the functionality part of it. I was close but couldn't quite get there. I've since looked at how other studens have done it and it makes sense now. 
+let header = document.querySelector('.header');
+let search = `
+  <label for="search" class="student-search">
+    <span>Search by name</span>
+    <input id="search" placeholder="Search by name...">
+    <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+  </label>
+`;
+header.insertAdjacentHTML('beforeend', search);
 
 
